@@ -1,11 +1,11 @@
+// server.js (final working version for Railway)
+
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const app = require("./app");
 
-// Load env vars
 dotenv.config({ path: "./config.env" });
 
-// Use full connection string
 const DB = process.env.DATABASE;
 
 mongoose
@@ -16,8 +16,9 @@ mongoose
     process.exit(1);
   });
 
-// Railway provides its own PORT variable — use that
 const port = process.env.PORT || 3000;
+
+// ✅ This line is key for Railway to work:
 app.listen(port, "0.0.0.0", () => {
   console.log(`🚀 App running on port ${port}...`);
 });

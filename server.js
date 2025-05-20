@@ -1,24 +1,23 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const app = require('./app');
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const app = require("./app");
 
-dotenv.config({ path: './config.env' });
+// Load env vars
+dotenv.config({ path: "./config.env" });
 
-// Replace <PASSWORD> with real password
-const DB = process.env.DATABASE.replace(
-  'o3IHU8q0RugVj8pq',
-  process.env.DATABASE_PASSWORD,
-);
+// Use full connection string
+const DB = process.env.DATABASE;
 
 mongoose
   .connect(DB)
-  .then(() => console.log('✅ MongoDB connection successful!'))
+  .then(() => console.log("✅ MongoDB connection successful!"))
   .catch((err) => {
-    console.error('❌ MongoDB connection failed:', err.message);
+    console.error("❌ MongoDB connection failed:", err.message);
     process.exit(1);
   });
 
+// Railway provides its own PORT variable — use that
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`🚀 App running on port ${port}...`);
 });
